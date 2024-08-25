@@ -3,8 +3,8 @@ import { FC } from 'react'
 
 
 const styles = {
-    primary:'bg-primary-50 dark:bg-primary-700 border-primary-50 dark:border-primary-600 border hover:border-primary-200 dark:hover:border-primary-400 focus-visible:outline outline-primary-200 dark:outline-primary-600 outline-2 outline-offset-2 dark:text-primary-100 text-primary-600',
-    link:'!px-0 !py-0 focus-visible:outline outline-primary-200 dark:outline-primary-600 outline-2 outline-offset-2',
+    primary:'bg-primary-50 dark:bg-primary-650 border-primary-50 dark:border-primary-650 border hover:border-primary-200 dark:hover:border-primary-400 focus-visible:outline outline-primary-200 dark:outline-primary-650 outline-2 outline-offset-2 dark:text-primary-100 text-primary-650',
+    link:'!px-0 !py-0 focus-visible:outline outline-primary-200 dark:outline-primary-650 outline-2 outline-offset-2',
 }
 
 const sizes = {

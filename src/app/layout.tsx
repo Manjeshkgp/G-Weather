@@ -4,8 +4,9 @@ import ThemeWrapper from "@/components/Wrappers/ThemeWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
+import { Providers } from "@/store/providers";
 
-const roboto = Roboto({weight:["400","500","700"],subsets:["latin"]});
+const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,14 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={roboto.className}>
-        <ThemeWrapper>
-          <Navbar/>
-          <main className="min-h-[calc(100vh-4.05rem)]">
-          {children}
-          </main>
-          <Footer/>
+      <body className={roboto.className+" bg-white dark:bg-primary-700"}>
+        <Providers>
+          <ThemeWrapper>
+            <Navbar />
+            <main className="min-h-[calc(100vh-4.05rem)]">{children}</main>
+            <Footer />
           </ThemeWrapper>
+        </Providers>
       </body>
     </html>
   );
