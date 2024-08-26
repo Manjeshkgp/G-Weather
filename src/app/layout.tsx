@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Roboto, Roboto_Flex } from "next/font/google";
+import { Roboto } from "next/font/google";
 import ThemeWrapper from "@/components/Wrappers/ThemeWrapper";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import "./globals.css";
 import { Providers } from "@/store/providers";
 
@@ -23,9 +21,7 @@ export default function RootLayout({
       <body className={roboto.className+" bg-white dark:bg-primary-700"}>
         <Providers>
           <ThemeWrapper>
-            <Navbar />
-            <main className="min-h-[calc(100vh-4.05rem)]">{children}</main>
-            <Footer />
+              {children}
           </ThemeWrapper>
         </Providers>
       </body>

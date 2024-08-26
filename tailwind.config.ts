@@ -27,7 +27,8 @@ const config: Config = {
           100:"#e8e8e8",
           50:"#F8F9FA",
         }
-      }
+      },
+      
     },
   },
   plugins: [],
