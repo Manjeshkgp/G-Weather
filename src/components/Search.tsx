@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { KeyboardEventHandler, useEffect, useRef } from "react";
 import { SearchIcon, MicIcon } from "./svgs";
 import { IoClose, IoArrowBack } from "react-icons/io5";
 import { BsClock } from "react-icons/bs";
@@ -9,6 +9,7 @@ import {
   AreaI,
   deleteHistory,
   setAllData,
+  setLoading,
   setMobileSearch,
   setSearchString,
   setSearchSuggestions,
@@ -19,7 +20,7 @@ import { MainState } from "@/store/store";
 import Button from "./Button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 
 interface SearchI {
   isMobile?: boolean;
@@ -50,8 +51,7 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
     if (/Mobi|Android|iPhone/i.test(navigator.userAgent) && !isMobile) {
       dispatch(setMobileSearch(true));
       router.push("#mobile");
-    }
-    else if (searchSuggestions.length > 0 || e.target.value.length > 0) {
+    } else if (searchSuggestions.length > 0 || e.target.value.length > 0) {
       dispatch(setShowSuggestions(true));
       return;
     }
@@ -62,7 +62,7 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
     dispatch(setSearchString(""));
     dispatch(setShowSuggestions(false));
     dispatch(setSearchSuggestions([]));
-    if(searchRef.current){
+    if (searchRef.current) {
       searchRef.current.focus();
     }
   };
@@ -74,12 +74,14 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
   };
 
   const searchFunction = (obj: AreaI) => {
+    dispatch(setLoading(true));
     dispatch(addHistory(obj.localityId));
     router.push(
       `/search?q=${obj.localityName}&lat=${obj.latitude}&long=${obj.longitude}`
     );
     dispatch(setSearchString(obj.localityName));
     dispatch(setShowSuggestions(false));
+    dispatch(setLoading(false));
   };
 
   const deleteSingleHistory = (
@@ -95,11 +97,12 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
     router.back();
   };
 
-  const handleTextareaEnter = (e: KeyboardEvent) => {
+  const handleTextareaEnter: KeyboardEventHandler<HTMLTextAreaElement> = (
+    e
+  ) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      alert("Please click on search suggestions");
-
+      toast.error("Please click on search suggestions");
     }
   };
 
@@ -128,7 +131,7 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
     if (pageSearchQuery !== searchString) {
       if (pageSearchQuery) dispatch(setSearchString(pageSearchQuery));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSearchQuery, dispatch]);
 
   useEffect(() => {
@@ -211,12 +214,7 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
             onInput={handleTextInput}
             onFocus={handleFocus}
             onChange={handleSearch}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                toast.error("Please click on a search option only");
-              }
-            }}
+            onKeyDown={handleTextareaEnter}
             value={searchString}
             rows={1}
             className="focus:outline-none font-normal -mb-1.5 resize-none w-full bg-transparent p-0 m-0 overflow-hidden min-h-5 max-h-60"
@@ -259,7 +257,12 @@ export default function Search({ isMobile, pageSearchQuery }: SearchI) {
                   )}
                 </div>
               ))}
-              <div className={cn("flex justify-center gap-4 mt-4 w-full",pageSearchQuery&&"hidden")}>
+              <div
+                className={cn(
+                  "flex justify-center gap-4 mt-4 w-full",
+                  pageSearchQuery && "hidden"
+                )}
+              >
                 <Button type="button" size="sm">
                   Google Search
                 </Button>

@@ -19,3 +19,4 @@ export {default as CloudyMoonModerateRainIcon} from './custom/cloudy-moon-modera
 export {default as CloudyHeavyRainIcon} from './custom/cloudy-heavy-rain'
 export {default as FrostyRainIcon} from './custom/frosty-rain'
 export {default as WindIcon} from './custom/wind'
+export {default as UnknownWeatherIcon} from './custom/unknown-weather'

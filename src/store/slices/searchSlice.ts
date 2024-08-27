@@ -16,6 +16,7 @@ export interface searchState {
   showSuggestions: boolean;
   history: string[];
   mobileSearch: boolean;
+  loading:boolean
 }
 
 const loadHistoryFromLocalStorage = (): string[] => {
@@ -34,7 +35,8 @@ const initialState: searchState = {
   searchSuggestions: [],
   showSuggestions: false,
   history: loadHistoryFromLocalStorage(),
-  mobileSearch: false
+  mobileSearch: false,
+  loading:false
 };
 
 const searchSlice = createSlice({
@@ -71,6 +73,9 @@ const searchSlice = createSlice({
     setMobileSearch: (state, { payload }: PayloadAction<boolean>) => {
       state.mobileSearch = payload;
     },
+    setLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload;
+    },
   },
 });
 
@@ -83,5 +88,6 @@ export const {
   addHistory,
   deleteHistory,
   setMobileSearch,
+  setLoading
 } = searchSlice.actions;
 export default searchSlice.reducer;

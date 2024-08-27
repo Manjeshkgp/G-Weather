@@ -60,6 +60,7 @@ export default async function page({ searchParams }: Props) {
         headers: {
           "X-Zomato-Api-Key": process.env.WEATHER_API_KEY ?? "",
         },
+        next: { revalidate: 900 },
       }
     );
     if (res.ok) {
@@ -99,22 +100,25 @@ export default async function page({ searchParams }: Props) {
           <div className="relative self-center">
             <p className="absolute -top-2 lg:-top-3 right-0">°C</p>
             <p className="text-7xl lg:text-[7rem]">
-              {Math.round(data.temperature??"N/A")}
+              {typeof data.temperature === "number"
+                ? Math.round(data.temperature)
+                : "N/A"}
             </p>
           </div>
           <p>{searchParams.q}</p>
           <p>
-            Humidity: {data.humidity??"N/A"}% ({humidityDescription})
+            Humidity: {data.humidity ?? "N/A"}% ({humidityDescription})
           </p>
-          <p>Rain intensity: {data.rain_intensity??"N/A"} mm/min </p>
+          <p>Rain intensity: {data.rain_intensity ?? "N/A"} mm/min </p>
           <p>
-            Rain Accumulation: {data.rain_accumulation??"N/A"} mm/h ({rainDescription})
+            Rain Accumulation: {data.rain_accumulation ?? "N/A"} mm/h (
+            {rainDescription})
           </p>
         </div>
         <div className="flex flex-col w-full lg:w-1/2 min-h-80 gap-3 p-3 items-center">
           <WindIcon className="w-2/3 aspect-square h-full" />
           <p className="text-2xl lg:text-4xl text-center text-primary-900 dark:text-primary-100 font-bold">
-            {data.wind_speed??"N/A"} km/h <br /> {windDirection}
+            {data.wind_speed ?? "N/A"} km/h <br /> {windDirection}
           </p>
           <p className="text-xl lg:text-2xl text-center text-primary-900 dark:text-primary-100">
             {windSpeedDescription}

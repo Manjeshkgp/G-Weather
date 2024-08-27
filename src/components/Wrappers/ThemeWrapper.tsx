@@ -11,13 +11,16 @@ import { Toaster } from "react-hot-toast";
 import Search from "../Search";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
+import { BiLoaderCircle } from "react-icons/bi";
 
 export default function ThemeWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { mobileSearch } = useSelector((state: MainState) => state.search);
+  const { mobileSearch, loading } = useSelector(
+    (state: MainState) => state.search
+  );
   const params = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,8 +36,13 @@ export default function ThemeWrapper({
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Toaster position="bottom-right" reverseOrder={false}/>
+      <Toaster position="bottom-right" reverseOrder={false} />
       <Navbar />
+      {loading&&(
+        <div className="fixed flex justify-center dark:bg-primary-100/20 bg-primary-800/5 items-center inset-0 z-[100] backdrop-blur">
+          <BiLoaderCircle className="size-40 animate-pulse" />
+        </div>
+      )}
       {mobileSearch ? (
         <div
           id="mobile"

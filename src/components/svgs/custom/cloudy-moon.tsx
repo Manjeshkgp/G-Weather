@@ -10,12 +10,12 @@ const Icon: FC<IconProps> = ({...props }) => {
 <path d="M92.6484 73.1148C95.8413 61.687 89.1655 49.8346 77.7377 46.6417C66.3098 43.4488 54.4574 50.1246 51.2646 61.5524C48.0717 72.9803 54.7475 84.8327 66.1753 88.0256C77.6031 91.2184 89.4556 84.5427 92.6484 73.1148Z" fill="url(#paint1_linear_1_30)"/>
 <defs>
 <linearGradient id="paint0_linear_1_30" x1="30.0781" y1="91.2344" x2="63.0313" y2="48.5625" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F2F2F2"/>
-<stop offset="1" stop-color="#CFCFCF"/>
+<stop stopColor="#F2F2F2"/>
+<stop offset="1" stopColor="#CFCFCF"/>
 </linearGradient>
 <linearGradient id="paint1_linear_1_30" x1="80.7416" y1="59.6972" x2="55.8383" y2="81.3574" gradientUnits="userSpaceOnUse">
-<stop offset="0.02" stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0"/>
+<stop offset="0.02" stopColor="white"/>
+<stop offset="1" stopColor="white" stopOpacity="0"/>
 </linearGradient>
 </defs>
 </svg>

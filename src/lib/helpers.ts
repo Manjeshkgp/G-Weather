@@ -12,11 +12,12 @@ import {
   IconProps,
   MoonIcon,
   SunnyIcon,
+  UnknownWeatherIcon
 } from "@/components/svgs";
 import { FC } from "react";
 
 export function getWindDirection(degree: number) {
-  if (!degree) return "N/A";
+  if (typeof degree !== "number") return "N/A";
   degree = degree % 360;
   if ((degree >= 0 && degree < 22.5) || degree >= 337.5) {
     return "North wind";
@@ -38,7 +39,7 @@ export function getWindDirection(degree: number) {
 }
 
 export function getRainDescription(rainAccumulation: number) {
-  if (!rainAccumulation) return "N/A";
+  if (typeof rainAccumulation !== "number") return "N/A";
   if (rainAccumulation <= 0) {
     return "No rain";
   } else if (rainAccumulation > 0 && rainAccumulation <= 2.5) {
@@ -55,7 +56,7 @@ export function getRainDescription(rainAccumulation: number) {
 }
 
 export function getTemperatureDescription(temperature: number) {
-  if (!temperature) return "N/A";
+  if (typeof temperature !== "number") return "N/A";
   if (temperature < -10) {
     return "Very Frosty";
   } else if (temperature >= -10 && temperature < 0) {
@@ -76,8 +77,7 @@ export function getTemperatureDescription(temperature: number) {
 }
 
 export function getHumidityDescription(humidity: number) {
-  if (!humidity) return "N/A";
-
+  if (typeof humidity !== "number") return "N/A";
   if (humidity < 30) {
     return "Dry";
   } else if (humidity >= 30 && humidity < 60) {
@@ -90,8 +90,7 @@ export function getHumidityDescription(humidity: number) {
 }
 
 export function getWindSpeedDescription(windSpeed: number) {
-  if (!windSpeed) return "N/A";
-
+  if (typeof windSpeed !== "number") return "N/A";
   if (windSpeed < 1.5) {
     return "Calm";
   } else if (windSpeed >= 1.5 && windSpeed < 5.5) {
@@ -125,6 +124,9 @@ export function getWeatherIcon(
   humidityDescription: string,
   isDaytime: boolean
 ): FC<IconProps> {
+  if(temperatureDescription==="N/A"&&rainDescription==="N/A"&&humidityDescription==="N/A"){
+    return UnknownWeatherIcon
+  }
   // Base on the temperature
   if (
     temperatureDescription.includes("Frosty") ||
